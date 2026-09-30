@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "phc": {
+      "title": "Primary Health Centre",
+      "description": "Healthcare facility node tracking beds, staff, risk, and operational status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["phc", "chc", "warehouse", "district_hospital"] },
+        "state": { "type": "string" },
+        "district": { "type": "string" },
+        "bedsTotal": { "type": "number" },
+        "bedsOccupied": { "type": "number" },
+        "staffSanctioned": { "type": "number" },
+        "staffPresent": { "type": "number" },
+        "connectivityStatus": { "type": "string", "enum": ["online", "intermittent", "offline"] },
+        "currentStockDays": { "type": "number" },
+        "stockOutRisk": { "type": "number" },
+        "isCritical": { "type": "boolean" },
+        "lastSyncMinutesAgo": { "type": "number" }
+      },
+      "required": ["id", "name", "type", "state", "district"]
+    },
+    "inventory": {
+      "title": "Inventory Item",
+      "description": "Medicine stock item tracked per PHC facility",
+      "type": "object",
+      "properties": {
+        "phcId": { "type": "string" },
+        "medicineId": { "type": "string" },
+        "medicineName": { "type": "string" },
+        "unit": { "type": "string" },
+        "quantity": { "type": "number" },
+        "reservedQuantity": { "type": "number" },
+        "reorderLevel": { "type": "number" },
+        "leadTimeDays": { "type": "number" },
+        "expiryDate": { "type": "string" }
+      },
+      "required": ["phcId", "medicineId", "quantity", "unit"]
+    },
+    "transfer": {
+      "title": "Supply Redistribution Transfer",
+      "description": "Constrained resource transfer approved by human officer",
+      "type": "object",
+      "properties": {
+        "transferId": { "type": "string" },
+        "sourceId": { "type": "string" },
+        "targetDistrict": { "type": "string" },
+        "medicineId": { "type": "string" },
+        "quantity": { "type": "number" },
+        "status": { "type": "string", "enum": ["proposed", "approved", "in_transit", "delivered", "verified"] },
+        "approvedBy": { "type": "string" },
+        "approvedAt": { "type": "string" },
+        "etaHours": { "type": "number" },
+        "idempotencyKey": { "type": "string" }
+      },
+      "required": ["transferId", "sourceId", "quantity", "status"]
+    },
+    "auditRecord": {
+      "title": "Immutable Audit Record",
+      "description": "Cryptographically auditable record of system events, predictions, and approvals",
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "actor": { "type": "string" },
+        "role": { "type": "string" },
+        "action": { "type": "string" },
+        "modelIdentifier": { "type": "string" },
+        "inputSnapshotId": { "type": "string" },
+        "outcome": { "type": "string" },
+        "hash": { "type": "string" }
+      },
+      "required": ["eventId", "timestamp", "actor", "action"]
+    }
+  },
+  "firestore": {
+    "/phcs/{phcId}": {
+      "schema": { "$ref": "#/entities/phc" },
+      "description": "Public health centres and regional warehouses"
+    },
+    "/inventory/{inventoryId}": {
+      "schema": { "$ref": "#/entities/inventory" },
+      "description": "Medicine stock levels and reservations"
+    },
+    "/transfers/{transferId}": {
+      "schema": { "$ref": "#/entities/transfer" },
+      "description": "Consequential supply redistribution records"
+    },
+    "/audit_ledger/{eventId}": {
+      "schema": { "$ref": "#/entities/auditRecord" },
+      "description": "Append-only system and approval audit log"
+    }
+  }
+}

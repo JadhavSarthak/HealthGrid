@@ -1,0 +1,8 @@
+{
+  "name": "HealthGrid - India PHC Resource & Supply Resilience",
+  "description": "Agentic decision-support platform for India Primary Health Centres predicting shortages, optimizing redistribution, and federated learning.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
