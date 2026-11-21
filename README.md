@@ -3,7 +3,7 @@
 > **Submitted for Code for Communities 2.0 Hackathon**  
 > **Track:** *Smart Health & Supply Chain Resilience*  
 > **Powered by:** Google Gemini 2.5 Flash, Google Agent Development Kit (ADK), Vertex AI, & Firebase Cloud Firestore
-
+>RATVVY
 ---
 
 ## 📌 Executive Summary
