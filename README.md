@@ -25,7 +25,7 @@ In rural Indian public healthcare systems:
 
 ---
 
-## 🌟 Key Features & Core Innovations
+##  Key Features & Core Innovations
 
 ### 1. 🤖 Google ADK Multi-Agent Intelligence Architecture
 HealthGrid deploys six specialized AI agents powered by the **Google Agent Development Kit (ADK)** and **Gemini 2.5 Flash**:
